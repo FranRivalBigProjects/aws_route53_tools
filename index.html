@@ -1,113 +1,1115 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="PkLa_ViOo6FAHpvh8SacceMb95o9tePRdrqLNBz9X1M" />
+<meta name="robots" content="index, follow">
 
-    <!-- 🔐 Google Site Verification -->
-    <meta name="google-site-verification" content="PkLa_ViOo6FAHpvh8SacceMb95o9tePRdrqLNBz9X1M" />
+<title>Route 53 Pricing Calculator – Free AWS Route 53 Cost Estimator</title>
 
-    <!-- SEO Potenciado -->
-    <title>AWS Route 53 Tools – DNS Cost Calculator & Propagation Checker</title>
+<meta name="description" content="Free AWS Route 53 pricing calculator. Estimate monthly costs for hosted zones, DNS queries, health checks, and traffic policy records. Covers standard, latency, geolocation, and weighted routing. No login required.">
 
-    <meta name="description" content="Optimize AWS Route 53 DNS with tools to estimate costs, check propagation, and analyze hosted zone pricing. Improve DNS performance and reduce expenses.">
+<meta name="keywords" content="route 53 pricing calculator, aws route 53 pricing calculator, route53 cost calculator, aws route53 pricing, hosted zone cost calculator, dns query cost aws, route 53 health check cost, route53 billing estimator, aws dns pricing tool, route53 hosted zone pricing">
 
-    <meta name="keywords" content="
-    aws route53 cost calculator,
-    dns cost calculator aws,
-    dns propagation checker aws,
-    route53 pricing calculator,
-    hosted zone pricing aws,
-    dns latency checker aws,
-    route53 billing estimator,
-    dns lookup cost calculator,
-    aws dns pricing tool,
-    route53 hosted zone cost,
-    dns performance checker aws,
-    optimize route53 costs
-    ">
+<link rel="canonical" href="https://franrivalbigprojects.github.io/aws-route53-tools/">
 
-    <meta name="author" content="AI Tools Suite">
+<meta property="og:title" content="Route 53 Pricing Calculator – AWS DNS Cost Estimator">
+<meta property="og:description" content="Calculate AWS Route 53 monthly costs for hosted zones, DNS queries, health checks, and traffic policies. Free, no login.">
+<meta property="og:type" content="website">
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="AWS Route 53 Tools – DNS Cost & Performance Optimization">
-    <meta property="og:description" content="Estimate DNS costs, check propagation, and optimize Route 53 usage.">
-    <meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Estilos -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background: #0f172a;
-            color: #e2e8f0;
-        }
-        h1 {
-            color: #38bdf8;
-        }
-        p {
-            max-width: 750px;
-            line-height: 1.6;
-        }
-        .tools {
-            margin-top: 30px;
-        }
-        .tool {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #1e293b;
-            border-radius: 10px;
-            transition: 0.2s;
-        }
-        .tool:hover {
-            background: #334155;
-        }
-        a {
-            text-decoration: none;
-            color: #22c55e;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        small {
-            display: block;
-            margin-top: 5px;
-            color: #94a3b8;
-        }
-    </style>
+<style>
+:root {
+  --bg: #030a06;
+  --surface: #060f0a;
+  --surface2: #091510;
+  --border: #0e1f16;
+  --border2: #152d1e;
+  --r53: #00a86b;
+  --r53-dim: rgba(0,168,107,0.12);
+  --r53-dim2: rgba(0,168,107,0.06);
+  --r53-glow: rgba(0,168,107,0.2);
+  --blue: #38bdf8;
+  --blue-dim: rgba(56,189,248,0.08);
+  --orange: #fb923c;
+  --orange-dim: rgba(251,146,60,0.08);
+  --yellow: #fbbf24;
+  --yellow-dim: rgba(251,191,36,0.08);
+  --red: #f87171;
+  --red-dim: rgba(248,113,113,0.08);
+  --text: #b0d4c0;
+  --text-muted: #3a5a48;
+  --text-dim: #0f2018;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Inter', sans-serif;
+  --r: 8px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 44px 44px;
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 0;
+}
+
+header {
+  border-bottom: 1px solid var(--border2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(3,10,6,0.96);
+  backdrop-filter: blur(12px);
+}
+
+.header-inner {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.logo-pill {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--r53);
+  background: var(--r53-dim2);
+  border: 1px solid rgba(0,168,107,0.3);
+  border-radius: 3px;
+  padding: 3px 9px;
+}
+
+.logo-text {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.logo-text strong { color: var(--r53); font-weight: 500; }
+
+.wrapper {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+/* HERO */
+.hero {
+  padding: 48px 0 34px;
+  border-bottom: 1px solid var(--border2);
+  margin-bottom: 28px;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--r53);
+  margin-bottom: 14px;
+  opacity: 0.8;
+}
+
+h1 {
+  font-size: clamp(22px, 3.2vw, 30px);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+h1 em { font-style: normal; color: var(--r53); }
+
+.hero-sub {
+  font-size: 15px;
+  color: var(--text-muted);
+  max-width: 600px;
+  line-height: 1.75;
+  margin-bottom: 18px;
+}
+
+.hero-sub strong { color: var(--text); }
+
+.pill-row { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.pill {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 3px 9px;
+  border-radius: 3px;
+  border: 1px solid;
+}
+
+.pill-r53 { color: var(--r53); background: var(--r53-dim2); border-color: rgba(0,168,107,0.3); }
+.pill-dim { color: var(--text-muted); border-color: var(--border2); }
+
+/* TOOL */
+.tool-shell {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.tool-topbar {
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border2);
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.topbar-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* FORM SECTIONS */
+.form-section {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border2);
+}
+
+.form-sec-head {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--r53);
+  opacity: 0.7;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.form-sec-head::after { content: ''; flex: 1; height: 1px; background: var(--border2); }
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+}
+
+.field { display: flex; flex-direction: column; gap: 5px; }
+
+.field-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.field-hint {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-family: var(--mono);
+  margin-top: -2px;
+}
+
+.r53-input, .r53-select {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 9px 11px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text);
+  width: 100%;
+  -webkit-appearance: none;
+  transition: border-color 0.2s;
+}
+
+.r53-input:focus, .r53-select:focus {
+  outline: none;
+  border-color: rgba(0,168,107,0.35);
+}
+
+.r53-select option { background: #091510; }
+
+/* Routing type buttons */
+.routing-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.rt-btn {
+  padding: 6px 13px;
+  font-family: var(--mono);
+  font-size: 11px;
+  border-radius: 4px;
+  border: 1px solid var(--border2);
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-muted);
+  transition: all 0.15s;
+}
+
+.rt-btn:hover { border-color: var(--r53); color: var(--r53); }
+
+.rt-btn.active {
+  border-color: var(--r53);
+  background: var(--r53-dim2);
+  color: var(--r53);
+}
+
+/* Calc bar */
+.calc-bar {
+  padding: 14px 20px;
+  background: var(--surface2);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-calc {
+  padding: 10px 28px;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--r53);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: opacity 0.15s, box-shadow 0.15s;
+  box-shadow: 0 0 18px var(--r53-glow);
+}
+
+.btn-calc:hover { opacity: 0.87; box-shadow: 0 0 26px rgba(0,168,107,0.38); }
+
+.btn-sm {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid;
+  transition: opacity 0.15s;
+  background: transparent;
+}
+
+.btn-sm:hover { opacity: 0.75; }
+.btn-ghost { color: var(--text-muted); border-color: var(--border2); }
+.btn-green { color: var(--r53); border-color: rgba(0,168,107,0.25); background: var(--r53-dim2); }
+
+/* RESULTS */
+#resultsWrap { display: none; }
+
+.results-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.res-card {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.res-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+
+.rc-r53::before   { background: var(--r53); }
+.rc-blue::before  { background: var(--blue); }
+.rc-orange::before{ background: var(--orange); }
+.rc-yellow::before{ background: var(--yellow); }
+
+.rc-label { font-family: var(--mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 8px; }
+.rc-val   { font-family: var(--mono); font-size: 22px; font-weight: 600; line-height: 1; margin-bottom: 3px; }
+.rc-sub   { font-family: var(--mono); font-size: 10px; color: var(--text-muted); }
+
+.breakdown {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.bt-head {
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border2);
+  padding: 8px 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.bt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--border2);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.bt-row:last-child { border-bottom: none; }
+.bt-row:hover { background: rgba(0,168,107,0.02); }
+.bt-key   { color: var(--text-muted); }
+.bt-val   { color: var(--text); }
+.bt-total { color: var(--r53); font-size: 14px; font-weight: 600; }
+.bt-free  { color: var(--r53); font-size: 12px; }
+
+/* Optimization card */
+.opt-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-left: 3px solid var(--r53);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 14px 18px;
+  margin-bottom: 14px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  display: none;
+}
+
+.opt-card strong { color: var(--r53); }
+
+/* DIVIDER */
+hr.divider { border: none; border-top: 1px solid var(--border2); margin: 50px 0; }
+
+.content-section { margin-bottom: 50px; }
+
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.sec-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--r53);
+  white-space: nowrap;
+  opacity: 0.7;
+}
+
+.sec-rule { flex: 1; height: 1px; background: var(--border2); }
+
+p { font-size: 14px; color: var(--text-muted); line-height: 1.8; margin-bottom: 10px; }
+p strong { color: var(--text); }
+
+code {
+  font-family: var(--mono);
+  font-size: 12px;
+  background: var(--surface2);
+  color: var(--r53);
+  padding: 2px 7px;
+  border-radius: 3px;
+  border: 1px solid var(--border2);
+}
+
+/* Pricing table */
+.price-table {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.pt-row {
+  display: grid;
+  grid-template-columns: 220px 1fr 1fr;
+  border-bottom: 1px solid var(--border2);
+}
+
+.pt-row:last-child { border-bottom: none; }
+.pt-row.pt-head   { background: var(--surface2); }
+
+.pt-cell {
+  padding: 9px 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  border-right: 1px solid var(--border2);
+}
+
+.pt-cell:last-child { border-right: none; }
+.pt-head .pt-cell { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; }
+.pt-price { color: var(--r53); }
+.pt-free  { color: var(--blue); }
+
+.dense-block {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  padding: 22px;
+  margin-top: 14px;
+}
+
+.dense-block p { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--border2); }
+.dense-block p:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+
+.faq-list {
+  margin-top: 14px;
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+
+.faq-item { border-bottom: 1px solid var(--border2); }
+.faq-item:last-child { border-bottom: none; }
+
+.faq-q {
+  width: 100%;
+  text-align: left;
+  background: var(--surface);
+  border: none;
+  padding: 13px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  font-family: var(--sans);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  transition: background 0.15s;
+}
+
+.faq-q:hover { background: var(--r53-dim2); }
+.faq-arrow { font-family: var(--mono); font-size: 11px; color: var(--text-dim); transition: transform 0.2s; flex-shrink: 0; }
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+.faq-a {
+  display: none;
+  padding: 0 18px 13px;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.75;
+  border-top: 1px solid var(--border2);
+  background: var(--bg);
+}
+
+.faq-item.open .faq-a { display: block; }
+.faq-a code { color: var(--r53); background: var(--r53-dim2); }
+
+.other-tools {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.otl {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  padding: 12px 14px;
+  text-decoration: none;
+  display: block;
+  transition: border-color 0.15s;
+}
+
+.otl:hover { border-color: rgba(0,168,107,0.3); }
+.otl-eye  { font-family: var(--mono); font-size: 9px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
+.otl-name { font-family: var(--mono); font-size: 12px; color: var(--r53); font-weight: 500; }
+
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 50px; }
+
+.tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  padding: 4px 12px;
+  cursor: default;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tag:hover { color: var(--r53); border-color: rgba(0,168,107,0.3); }
+
+footer { border-top: 1px solid var(--border2); padding: 20px 0; position: relative; z-index: 1; }
+
+.footer-inner {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+footer p { font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin: 0; }
+
+@media (max-width: 680px) {
+  .form-grid { grid-template-columns: 1fr 1fr; }
+  .results-cards { grid-template-columns: 1fr 1fr; }
+  .pt-row { grid-template-columns: 140px 1fr 1fr; font-size: 10px; }
+}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Route 53 Pricing Calculator",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Free AWS Route 53 pricing calculator. Estimate monthly costs for hosted zones, DNS queries by routing type, health checks, and traffic policy records. Includes free tier calculations and cost breakdown. No login required.",
+  "featureList": "Hosted zone cost, DNS query pricing, health check cost, traffic policy records, routing type pricing, standard latency geolocation weighted routing, free tier calculation, cost optimization tips"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much does AWS Route 53 cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AWS Route 53 pricing: Hosted zones $0.50/month for the first 25 zones, $0.10/month for additional. DNS queries: Standard routing $0.40 per million (first 1 billion), $0.20 per million above 1 billion. Latency, failover, geolocation, multi-value routing $0.60 per million. Health checks $0.50/month (basic) or $1.00/month (with SNI/HTTPS). Traffic policy records $50/month per policy + $0.50 per million queries. Alias queries to AWS resources are free."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is free in AWS Route 53?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Route 53 free items: Alias queries to AWS resources (ELB, CloudFront, S3 websites, API Gateway, Elastic Beanstalk) are always free regardless of volume. Private hosted zone queries are not billed. AWS charges a $0.50/month hosted zone fee but the first test hosted zone created and deleted within 12 hours of creation is free. The AWS Free Tier does not cover Route 53 hosted zones."
+      }
+    }
+  ]
+}
+</script>
+
 </head>
+
 <body>
 
-    <h1>AWS Route 53 Tools</h1>
+<header>
+  <div class="header-inner">
+    <span class="logo-pill">R53</span>
+    <span class="logo-text"><strong>route53</strong>-pricing-calculator</span>
+  </div>
+</header>
 
-    <p>
-        Optimize your DNS infrastructure with AWS Route 53 tools designed for developers,
-        DevOps engineers, and cloud architects. Estimate DNS costs, analyze propagation,
-        and manage hosted zone pricing efficiently.
+<div class="wrapper">
+
+  <section class="hero">
+    <p class="hero-eyebrow">// Free AWS DNS Cost Tool</p>
+    <h1><em>Route 53</em> Pricing Calculator<br>AWS DNS Cost Estimator</h1>
+    <p class="hero-sub">
+      Estimate monthly <strong>AWS Route 53 costs</strong> for hosted zones, DNS queries, health checks, and traffic policy records. Select routing type and get a full cost breakdown.
     </p>
-
-    <p>
-        These tools help improve DNS performance, reduce costs, and ensure reliable domain
-        resolution across AWS infrastructure. Ideal for websites, APIs, and global applications.
-    </p>
-
-    <div class="tools">
-
-        <div class="tool">
-            <a href="dns_cost_calculator/">DNS Cost Calculator</a>
-            <small>Estimate AWS Route 53 DNS query and hosted zone costs.</small>
-        </div>
-
-        <div class="tool">
-            <a href="dns_propagation_checker/">DNS Propagation Checker</a>
-            <small>Check DNS propagation status across global regions.</small>
-        </div>
-
-        <div class="tool">
-            <a href="hosted_zone_pricing_tool/">Hosted Zone Pricing Tool</a>
-            <small>Analyze Route 53 hosted zone pricing and usage costs.</small>
-        </div>
-
+    <div class="pill-row">
+      <span class="pill pill-r53">Hosted Zones</span>
+      <span class="pill pill-r53">DNS Queries</span>
+      <span class="pill pill-dim">Health Checks</span>
+      <span class="pill pill-dim">Traffic Policies</span>
+      <span class="pill pill-dim">Free · No login</span>
     </div>
+  </section>
+
+  <!-- TOOL -->
+
+  <div class="tool-shell">
+    <div class="tool-topbar">
+      <span class="topbar-label">// Route 53 Cost Calculator</span>
+      <div style="display:flex;gap:8px;">
+        <button class="btn-sm btn-green" onclick="loadSample()">Load Sample</button>
+        <button class="btn-sm btn-ghost" onclick="resetCalc()">Reset</button>
+      </div>
+    </div>
+
+
+<!-- HOSTED ZONES -->
+<div class="form-section">
+  <div class="form-sec-head">Hosted Zones</div>
+  <div class="form-grid">
+    <div class="field">
+      <label class="field-label">Public Hosted Zones</label>
+      <p class="field-hint">$0.50/mo first 25 · $0.10/mo after</p>
+      <input class="r53-input" type="number" id="publicZones" placeholder="3" min="0">
+    </div>
+    <div class="field">
+      <label class="field-label">Private Hosted Zones</label>
+      <p class="field-hint">$0.50/mo · queries not billed</p>
+      <input class="r53-input" type="number" id="privateZones" placeholder="1" min="0">
+    </div>
+    <div class="field">
+      <label class="field-label">Region</label>
+      <p class="field-hint">Pricing region</p>
+      <select class="r53-select" id="regionSelect">
+        <option value="standard">US / EU / Standard</option>
+        <option value="cn">China (Beijing / Ningxia)</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- DNS QUERIES -->
+<div class="form-section">
+  <div class="form-sec-head">DNS Queries</div>
+  <div class="form-grid">
+    <div class="field">
+      <label class="field-label">Standard Queries (millions/mo)</label>
+      <p class="field-hint">Simple, weighted — $0.40/M</p>
+      <input class="r53-input" type="number" id="stdQueries" placeholder="100" min="0">
+    </div>
+    <div class="field">
+      <label class="field-label">Advanced Queries (millions/mo)</label>
+      <p class="field-hint">Latency, geo, failover — $0.60/M</p>
+      <input class="r53-input" type="number" id="advQueries" placeholder="50" min="0">
+    </div>
+    <div class="field">
+      <label class="field-label">Alias Queries (millions/mo)</label>
+      <p class="field-hint">To AWS resources — FREE</p>
+      <input class="r53-input" type="number" id="aliasQueries" placeholder="200" min="0">
+    </div>
+  </div>
+</div>
+
+<!-- HEALTH CHECKS -->
+<div class="form-section">
+  <div class="form-sec-head">Health Checks</div>
+  <div class="form-grid">
+    <div class="field">
+      <label class="field-label">Basic Health Checks</label>
+      <p class="field-hint">HTTP/TCP — $0.50/mo each</p>
+      <input class="r53-input" type="number" id="basicHC" placeholder="5" min="0">
+    </div>
+    <div class="field">
+      <label class="field-label">HTTPS / SNI Health Checks</label>
+      <p class="field-hint">HTTPS + string match — $1.00/mo each</p>
+      <input class="r53-input" type="number" id="httpsHC" placeholder="2" min="0">
+    </div>
+    <div class="field">
+      <label class="field-label">Health Checks in Other Regions</label>
+      <p class="field-hint">+$0.50/mo per region over 1</p>
+      <input class="r53-input" type="number" id="extraRegions" placeholder="0" min="0">
+    </div>
+  </div>
+</div>
+
+<!-- TRAFFIC POLICIES -->
+<div class="form-section">
+  <div class="form-sec-head">Traffic Policy Records</div>
+  <div class="form-grid">
+    <div class="field">
+      <label class="field-label">Traffic Policy Records</label>
+      <p class="field-hint">$50.00/mo per policy record</p>
+      <input class="r53-input" type="number" id="trafficPolicies" placeholder="0" min="0">
+    </div>
+    <div class="field">
+      <label class="field-label">Policy Record Queries (millions/mo)</label>
+      <p class="field-hint">$0.50/M on top of policy fee</p>
+      <input class="r53-input" type="number" id="policyQueries" placeholder="0" min="0">
+    </div>
+  </div>
+</div>
+
+<div class="calc-bar">
+  <button class="btn-calc" onclick="calcRoute53()">Calculate Route 53 Cost</button>
+  <button class="btn-sm btn-ghost" onclick="resetCalc()">Reset</button>
+</div>
+
+
+  </div>
+
+  <!-- RESULTS -->
+
+  <div id="resultsWrap">
+    <div class="results-cards" id="resultsCards"></div>
+    <div class="breakdown" id="breakdownTable"></div>
+    <div class="opt-card" id="optCard"></div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- PRICING REFERENCE -->
+
+  <section class="content-section">
+    <div class="sec-head">
+      <span class="sec-label">Route 53 pricing reference</span>
+      <span class="sec-rule"></span>
+    </div>
+    <p><strong>AWS Route 53</strong> charges are based on four components: hosted zones, DNS query volume, health checks, and traffic policy records. Pricing is consistent across most AWS regions except China.</p>
+
+
+<div class="price-table">
+  <div class="pt-row pt-head">
+    <div class="pt-cell">Component</div>
+    <div class="pt-cell">Price</div>
+    <div class="pt-cell">Notes</div>
+  </div>
+  <div class="pt-row">
+    <div class="pt-cell">Public hosted zone (first 25)</div>
+    <div class="pt-cell pt-price">$0.50 / mo</div>
+    <div class="pt-cell">Per zone, regardless of record count</div>
+  </div>
+  <div class="pt-row">
+    <div class="pt-cell">Public hosted zone (25+)</div>
+    <div class="pt-cell pt-price">$0.10 / mo</div>
+    <div class="pt-cell">For each zone above 25</div>
+  </div>
+  <div class="pt-row">
+    <div class="pt-cell">Private hosted zone</div>
+    <div class="pt-cell pt-price">$0.50 / mo</div>
+    <div class="pt-cell">Queries are not billed</div>
+  </div>
+  <div class="pt-row">
+    <div class="pt-cell">Standard DNS queries</div>
+    <div class="pt-cell pt-price">$0.40 / million</div>
+    <div class="pt-cell">Simple, weighted, multivalue; $0.20/M above 1B</div>
+  </div>
+  <div class="pt-row">
+    <div class="pt-cell">Advanced routing queries</div>
+    <div class="pt-cell pt-price">$0.60 / million</div>
+    <div class="pt-cell">Latency, failover, geolocation, IP-based</div>
+  </div>
+  <div class="pt-row">
+    <div class="pt-cell">Alias queries to AWS resources</div>
+    <div class="pt-cell pt-free">FREE</div>
+    <div class="pt-cell">ELB, CloudFront, S3, API GW, etc.</div>
+  </div>
+  <div class="pt-row">
+    <div class="pt-cell">Basic health check (HTTP/TCP)</div>
+    <div class="pt-cell pt-price">$0.50 / mo</div>
+    <div class="pt-cell">Per health check endpoint</div>
+  </div>
+  <div class="pt-row">
+    <div class="pt-cell">HTTPS / SNI health check</div>
+    <div class="pt-cell pt-price">$1.00 / mo</div>
+    <div class="pt-cell">HTTPS with string matching or SNI</div>
+  </div>
+  <div class="pt-row">
+    <div class="pt-cell">Traffic policy record</div>
+    <div class="pt-cell pt-price">$50.00 / mo</div>
+    <div class="pt-cell">Per policy record + $0.50/M queries</div>
+  </div>
+</div>
+
+  </section>
+
+  <!-- DENSE GUIDE -->
+
+  <section class="content-section">
+    <div class="sec-head">
+      <span class="sec-label">Route 53 cost optimization</span>
+      <span class="sec-rule"></span>
+    </div>
+    <div class="dense-block">
+      <p><strong>Use alias records to eliminate query charges</strong><br>
+      Any query that resolves to an alias record pointing at an AWS resource — Elastic Load Balancer, CloudFront distribution, S3 static website, API Gateway endpoint, Elastic Beanstalk — is free. Replace A records or CNAME records pointing at AWS resources with alias records. For high-traffic applications this can eliminate the majority of DNS query costs.</p>
+      <p><strong>Consolidate hosted zones where possible</strong><br>
+      Each hosted zone costs $0.50/month even if it serves zero traffic. If you have dev/staging zones that mirror production, consider removing them when not in use. After 25 zones the price drops to $0.10/month, but the first 25 at $0.50 each add up to $12.50/month in zone fees alone.</p>
+      <p><strong>Traffic Policy records are expensive for simple use cases</strong><br>
+      Traffic Policy records cost $50/month each — designed for complex multi-region failover with visual policy editor. For simple failover between two endpoints, a standard failover routing policy with a health check costs $1/month ($0.50 health check + $0.50/M queries) instead of $50/month. Only use Traffic Policies when you need complex routing logic across 3+ endpoints.</p>
+      <p><strong>Advanced routing query volume</strong><br>
+      Latency, geolocation, failover, and IP-based routing queries cost $0.60/million — 50% more than standard routing. For internal services where latency-based routing between two regions adds marginal benefit, weighted routing ($0.40/M) or alias records (free) may be sufficient.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+
+  <section class="content-section">
+    <div class="sec-head">
+      <span class="sec-label">FAQ — Route 53 pricing</span>
+      <span class="sec-rule"></span>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How much does AWS Route 53 cost per month?<span class="faq-arrow">&#9660;</span></button>
+        <div class="faq-a">Route 53 cost depends on usage: Hosted zones $0.50/mo (first 25) + $0.10/mo (above 25). DNS queries: $0.40/M for standard routing, $0.60/M for latency/geo/failover routing. Health checks $0.50/mo (HTTP/TCP) or $1.00/mo (HTTPS). Alias queries to AWS resources are free. A small app with 2 hosted zones and 10M standard queries/month would cost ~$5/month. Use the calculator above for your specific numbers.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Are alias records free in Route 53?<span class="faq-arrow">&#9660;</span></button>
+        <div class="faq-a">Yes. Alias queries that resolve to supported AWS resources are free regardless of volume. Free alias targets include: Elastic Load Balancers, CloudFront distributions, S3 website endpoints, API Gateway regional/edge endpoints, Elastic Beanstalk environments, VPC Interface Endpoints, and other Route 53 records in the same hosted zone. Regular CNAME records to external domains are billed as standard queries.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What is the difference between public and private hosted zones?<span class="faq-arrow">&#9660;</span></button>
+        <div class="faq-a">Public hosted zones answer DNS queries from the internet. Private hosted zones answer queries only from within associated VPCs — DNS queries to private hosted zones are not billed. Both types cost $0.50/month per zone. Private hosted zones are commonly used for internal service discovery (e.g. <code>api.internal.example.com</code>) without exposing records publicly.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Does Route 53 have a free tier?<span class="faq-arrow">&#9660;</span></button>
+        <div class="faq-a">Route 53 is not included in the AWS Free Tier for hosted zones. However, alias queries to AWS resources are always free. The first test hosted zone created and deleted within 12 hours is not charged. Queries to private hosted zones are not billed. There is no free monthly quota for DNS queries or health checks beyond these exceptions.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="sec-head">
+      <span class="sec-label">More tools</span>
+      <span class="sec-rule"></span>
+    </div>
+    <div class="other-tools">
+      <a href="dns_cost_calculator/" class="otl">
+        <p class="otl-eye">dns //</p>
+        <span class="otl-name">DNS Cost Calculator</span>
+      </a>
+      <a href="dns_propagation_checker/" class="otl">
+        <p class="otl-eye">propagation //</p>
+        <span class="otl-name">DNS Propagation Checker</span>
+      </a>
+      <a href="hosted_zone_pricing_tool/" class="otl">
+        <p class="otl-eye">zones //</p>
+        <span class="otl-name">Hosted Zone Pricing Tool</span>
+      </a>
+    </div>
+  </section>
+
+  <div class="tag-cloud">
+    <span class="tag">route 53 pricing calculator</span>
+    <span class="tag">aws route 53 pricing calculator</span>
+    <span class="tag">route53 cost calculator</span>
+    <span class="tag">hosted zone cost aws</span>
+    <span class="tag">dns query cost route53</span>
+    <span class="tag">route53 health check pricing</span>
+    <span class="tag">aws dns pricing tool</span>
+    <span class="tag">route53 alias records free</span>
+    <span class="tag">route53 traffic policy cost</span>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <p>route53-pricing-calculator &middot; free &middot; no login &middot; github pages</p>
+    <p>hosted zones &middot; dns queries &middot; health checks &middot; traffic policies</p>
+  </div>
+</footer>
+
+<script>
+function fmt(n) {
+  if (n >= 1000) return '$' + (n / 1000).toFixed(2) + 'K';
+  return '$' + n.toFixed(2);
+}
+
+function calcRoute53() {
+  var publicZones    = parseFloat(document.getElementById('publicZones').value)    || 0;
+  var privateZones   = parseFloat(document.getElementById('privateZones').value)   || 0;
+  var stdQueries     = parseFloat(document.getElementById('stdQueries').value)     || 0;
+  var advQueries     = parseFloat(document.getElementById('advQueries').value)     || 0;
+  var aliasQueries   = parseFloat(document.getElementById('aliasQueries').value)   || 0;
+  var basicHC        = parseFloat(document.getElementById('basicHC').value)        || 0;
+  var httpsHC        = parseFloat(document.getElementById('httpsHC').value)        || 0;
+  var extraRegions   = parseFloat(document.getElementById('extraRegions').value)   || 0;
+  var trafficPolicies= parseFloat(document.getElementById('trafficPolicies').value)|| 0;
+  var policyQueries  = parseFloat(document.getElementById('policyQueries').value)  || 0;
+  var region         = document.getElementById('regionSelect').value;
+
+  // Region multiplier for China
+  var regionMult = region === 'cn' ? 1.2 : 1.0;
+
+  // ─── HOSTED ZONES ───
+  var pub25    = Math.min(publicZones, 25);
+  var pubExtra = Math.max(0, publicZones - 25);
+  var pubZoneCost     = (pub25 * 0.50 + pubExtra * 0.10) * regionMult;
+  var privZoneCost    = privateZones * 0.50 * regionMult;
+  var totalZoneCost   = pubZoneCost + privZoneCost;
+
+  // ─── DNS QUERIES ───
+  var stdTier1 = Math.min(stdQueries, 1000);  // first 1B million
+  var stdTier2 = Math.max(0, stdQueries - 1000);
+  var stdCost  = (stdTier1 * 0.40 + stdTier2 * 0.20) * regionMult;
+  var advCost  = advQueries * 0.60 * regionMult;
+  var aliasCost = 0; // always free
+  var totalQueryCost = stdCost + advCost;
+
+  // ─── HEALTH CHECKS ───
+  var basicHCCost  = basicHC  * 0.50 * regionMult;
+  var httpsHCCost  = httpsHC  * 1.00 * regionMult;
+  var extraRegCost = extraRegions * 0.50 * (basicHC + httpsHC) * regionMult;
+  var totalHCCost  = basicHCCost + httpsHCCost + extraRegCost;
+
+  // ─── TRAFFIC POLICIES ───
+  var policyFee       = trafficPolicies * 50.00 * regionMult;
+  var policyQueryCost = policyQueries * 0.50 * regionMult;
+  var totalPolicyCost = policyFee + policyQueryCost;
+
+  var totalMonthly = totalZoneCost + totalQueryCost + totalHCCost + totalPolicyCost;
+  var totalAnnual  = totalMonthly * 12;
+
+  // ─── RESULT CARDS ───
+  var cards = document.getElementById('resultsCards');
+  cards.innerHTML = '';
+
+  function makeCard(cls, label, val, sub) {
+    var c = document.createElement('div'); c.className = 'res-card rc-' + cls;
+    var l = document.createElement('div'); l.className = 'rc-label'; l.textContent = label;
+    var v = document.createElement('div'); v.className = 'rc-val';
+    var colors = { r53: 'var(--r53)', blue: 'var(--blue)', orange: 'var(--orange)', yellow: 'var(--yellow)' };
+    v.style.color = colors[cls] || 'var(--text)';
+    v.textContent = val;
+    var s = document.createElement('div'); s.className = 'rc-sub'; s.textContent = sub;
+    c.appendChild(l); c.appendChild(v); c.appendChild(s);
+    return c;
+  }
+
+  cards.appendChild(makeCard('r53',    'Monthly Total',   fmt(totalMonthly),    'all components'));
+  cards.appendChild(makeCard('blue',   'Annual Estimate', fmt(totalAnnual),     'x12 months'));
+  cards.appendChild(makeCard('orange', 'Zone Costs',      fmt(totalZoneCost),   (publicZones + privateZones) + ' hosted zones'));
+  cards.appendChild(makeCard('yellow', 'Query Costs',     fmt(totalQueryCost),  (stdQueries + advQueries) + 'M billed queries'));
+
+  // ─── BREAKDOWN ───
+  var bt = document.getElementById('breakdownTable');
+  bt.innerHTML = '';
+  var bHead = document.createElement('div'); bHead.className = 'bt-head'; bHead.textContent = 'Cost Breakdown';
+  bt.appendChild(bHead);
+
+  function bRow(key, val, cls) {
+    var row = document.createElement('div'); row.className = 'bt-row';
+    var k = document.createElement('span'); k.className = 'bt-key'; k.textContent = key;
+    var v = document.createElement('span'); v.className = cls || 'bt-val'; v.textContent = val;
+    row.appendChild(k); row.appendChild(v); bt.appendChild(row);
+  }
+
+  if (publicZones > 0) {
+    if (pub25 > 0) bRow('Public hosted zones (first ' + pub25 + ' × $0.50)', fmt(pub25 * 0.50));
+    if (pubExtra > 0) bRow('Public hosted zones (' + pubExtra + ' additional × $0.10)', fmt(pubExtra * 0.10));
+  }
+  if (privateZones > 0) bRow('Private hosted zones (' + privateZones + ' × $0.50, queries free)', fmt(privZoneCost));
+  if (stdCost > 0) bRow('Standard DNS queries (' + stdQueries + 'M × $0.40)', fmt(stdCost));
+  if (advCost > 0) bRow('Advanced routing queries (' + advQueries + 'M × $0.60)', fmt(advCost));
+  if (aliasQueries > 0) bRow('Alias queries to AWS resources (' + aliasQueries + 'M)', '$0.00 — FREE', 'bt-free');
+  if (basicHCCost > 0) bRow('Basic health checks (' + basicHC + ' × $0.50)', fmt(basicHCCost));
+  if (httpsHCCost > 0) bRow('HTTPS health checks (' + httpsHC + ' × $1.00)', fmt(httpsHCCost));
+  if (extraRegCost > 0) bRow('Health checks in extra regions', fmt(extraRegCost));
+  if (policyFee > 0) bRow('Traffic policy records (' + trafficPolicies + ' × $50.00)', fmt(policyFee));
+  if (policyQueryCost > 0) bRow('Policy record queries (' + policyQueries + 'M × $0.50)', fmt(policyQueryCost));
+  bRow('Monthly total', fmt(totalMonthly), 'bt-total');
+  bRow('Annual total', fmt(totalAnnual));
+
+  // ─── OPTIMIZATION ───
+  var opt = document.getElementById('optCard');
+  var tips = [];
+
+  if (aliasQueries > 0 && (stdQueries > 0 || advQueries > 0)) {
+    tips.push('You have ' + aliasQueries + 'M free alias queries. Consider converting more A/CNAME records to alias records — alias queries to AWS resources are always free.');
+  }
+  if (trafficPolicies > 0 && basicHC > 0) {
+    var policyAlt = (basicHC * 0.50 * 2) + (stdQueries * 0.40);
+    if (policyFee > policyAlt) {
+      tips.push('Traffic policies cost $50/mo each. For simple failover, a standard failover routing policy + health check costs ~$1/month vs $50/month per policy record.');
+    }
+  }
+  if (advQueries > stdQueries) {
+    tips.push('Advanced routing queries ($0.60/M) exceed standard queries ($0.40/M). Evaluate whether latency/geo routing provides measurable benefit for lower-traffic endpoints — weighted routing at $0.40/M may be sufficient.');
+  }
+  if (publicZones > 10 && pubExtra === 0) {
+    tips.push('You have ' + publicZones + ' hosted zones — consider whether dev/staging zones that mirror production are needed. Each zone costs $0.50/mo minimum.');
+  }
+
+  if (tips.length > 0) {
+    opt.innerHTML = '';
+    var strong = document.createElement('strong');
+    strong.textContent = 'Cost optimization: ';
+    opt.appendChild(strong);
+    tips.forEach(function(tip, i) {
+      if (i > 0) {
+        var br = document.createElement('br');
+        var br2 = document.createElement('br');
+        opt.appendChild(br); opt.appendChild(br2);
+      }
+      opt.appendChild(document.createTextNode(tip));
+    });
+    opt.style.display = 'block';
+  } else {
+    opt.style.display = 'none';
+  }
+
+  document.getElementById('resultsWrap').style.display = 'block';
+  document.getElementById('resultsWrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function loadSample() {
+  document.getElementById('publicZones').value  = '5';
+  document.getElementById('privateZones').value = '2';
+  document.getElementById('stdQueries').value   = '150';
+  document.getElementById('advQueries').value   = '30';
+  document.getElementById('aliasQueries').value = '500';
+  document.getElementById('basicHC').value      = '8';
+  document.getElementById('httpsHC').value      = '3';
+  document.getElementById('extraRegions').value = '2';
+  document.getElementById('trafficPolicies').value = '0';
+  document.getElementById('policyQueries').value   = '0';
+  document.getElementById('regionSelect').value    = 'standard';
+  setTimeout(calcRoute53, 50);
+}
+
+function resetCalc() {
+  ['publicZones','privateZones','stdQueries','advQueries','aliasQueries',
+   'basicHC','httpsHC','extraRegions','trafficPolicies','policyQueries'].forEach(function(id) {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('resultsWrap').style.display = 'none';
+  document.getElementById('optCard').style.display = 'none';
+}
+
+function toggleFaq(btn) {
+  btn.parentElement.classList.toggle('open');
+}
+</script>
 
 </body>
 </html>
